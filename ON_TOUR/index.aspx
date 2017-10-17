@@ -48,7 +48,7 @@ http://www.templatemo.com/tm-483-lumino
                                 <asp:HyperLink ID="hlLogin" runat="server"><a class="nav-link" href="/Login.aspx" runat="server">LOGIN</a></asp:HyperLink>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#top">Intro</a>
+                                <a class="nav-link" href="/SignUp.aspx">REGISTRARSE</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#tm-section-2">News</a>

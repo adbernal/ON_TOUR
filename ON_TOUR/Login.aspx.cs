@@ -21,12 +21,13 @@ namespace ON_TOUR
             /*
             if (Session["correo"] != null)
             {
-                Response.Redirect("index.aspx");
+                Response.AddHeader("REFRESH", "5;URL=index.aspx");
+                lblEstado.Text = "Sera redireccionado en 5 segundos...";
             }
             else
             {
-
-            }*/
+            }
+            */
         }
 
         protected void btnLogin_Click(object sender, EventArgs e)
@@ -36,8 +37,18 @@ namespace ON_TOUR
 
             try
             {
-                c1.OraCmd = new OracleCommand("SELECT A.RUT, A.NOMBRE, A.APELLIDOP, A.APELLIDOM, A.IDCURSOFK, A.IDCOLEGIOFK, U.CORREO, U.CLAVE, IDTIPOUSUARIOFK " +
+                // 1. JOIN ENTRE TABLAS USUARIO Y APODERADO
+                /*
+                c1.OraCmd = new OracleCommand("SELECT A.RUT, A.NOMBRE, A.APELLIDOP, A.APELLIDOM, A.IDCURSOFK, A.IDCOLEGIOFK, U.CORREO, U.CLAVE, U.IDTIPOUSUARIOFK " +
                                                 "FROM USUARIO U JOIN APODERADO A ON U.CORREO = A.CORREOFK " +
+                                                "WHERE U.CORREO = :correo AND U.CLAVE = :clave", c1.OraConn);
+                */
+                
+                // 2. JOIN ENTRE TABLAS USUARIO, APODERADO, EJECUTIVO
+                c1.OraCmd = new OracleCommand("SELECT NVL(A.NOMBRE, E.NOMBRE), U.CORREO, U.CLAVE, U.IDTIPOUSUARIOFK " +
+                                                "FROM USUARIO U " +
+                                                "FULL OUTER JOIN APODERADO A ON U.CORREO = A.CORREOFK " +
+                                                "FULL OUTER JOIN EJECUTIVO E ON E.CORREOFK = U.CORREO " +
                                                 "WHERE U.CORREO = :correo AND U.CLAVE = :clave", c1.OraConn);
                 c1.EsSelect = true;
                 c1.OraCmd.Parameters.Add(new OracleParameter(":correo", txtCorreo.Text));
@@ -46,103 +57,43 @@ namespace ON_TOUR
                 //c1.OraDA.SelectCommand = c1.OraCmd;
                 c1.OraDR = c1.OraCmd.ExecuteReader();
                 c1.OraDR.Read();
-               
-                usuario.Correo = c1.OraDR.GetString(6);
-                usuario.Nombre = c1.OraDR.GetString(1);
-                usuario.IdTipoUsuario = c1.OraDR.GetInt32(8);
+
+                // INDICES CORRESPONDIENTES AL JOIN 1
+                //usuario.Correo = c1.OraDR.GetString(6);
+                //usuario.Nombre = c1.OraDR.GetString(1);
+                //usuario.IdTipoUsuario = c1.OraDR.GetInt32(8);
+                
+                usuario.Correo = c1.OraDR.GetString(1);
+                usuario.Nombre = c1.OraDR.GetString(0);
+                usuario.IdTipoUsuario = c1.OraDR.GetInt32(3);
                 Session["correo"] = usuario.Correo;
                 Session["nombreUsuario"] = usuario.Nombre + " " + usuario.ApellidoP + " " + usuario.ApellidoM;
                 Session["tipoUsuario"] = usuario.IdTipoUsuario;
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
-                lblMensaje.Text = ("Error. Usuario o contraseña incorrecto(s).");
+                lblMensaje.Text = "Credenciales incorrectas. Inténtelo de nuevo.";
             }
-
+                
             if (c1.OraDR.HasRows)
             {
                 //lblMensaje.Text = "Bienvenid@, " + Session["nombreUsuario"];
                 switch (usuario.IdTipoUsuario)
                 {
                     case 1:
+                        Session["rol"] = "Apoderado";
                         Response.Redirect("PanelApoderado.aspx");
                         break;
                     case 2:
+                        Session["rol"] = "Representante";
                         Response.Redirect("PanelRepresentante.aspx");
                         break;
                     case 4:
+                        Session["rol"] = "Ejecutivo";
                         Response.Redirect("PanelEjecutivo.aspx");
                         break;
                 }
             }
-
-            /*
-            OracleCommand cmd2 = new OracleCommand("SELECT nombre FROM apoderado WHERE correoFK = :correo2", conexionOT.Oraconn);
-            cmd2.Parameters.Add(new OracleParameter(":correo2", txtCorreo.Text));
-            c.Oraconn.Open(); //Importante para que la conexion funcione
-            cmd2.CommandType = CommandType.Text;
-            OracleDataReader dr = cmd2.ExecuteReader();
-            dr.Read();
-            lblTexto.Text = dr.GetString(0);
-            */
-
-            /*
-            string cs = "DATA SOURCE=DESKTOP-LTBT320:1522/xe;USER ID=ONTOUR;PASSWORD=ontour";
-            OracleConnection conn = new OracleConnection(cs);
-
-            conn.Open();
-            
-            DataSet ds = new DataSet();
-
-            OracleCommand cmd = new OracleCommand("SELECT correo, clave FROM usuario WHERE correo = :correo AND clave = :clave", conexionOT.Oraconn);
-
-            OracleCommand cmd2 = new OracleCommand("SELECT nombre, apellidop, apellidom FROM apoderado WHERE correo = :correo");
-
-            OracleDataAdapter oda = new OracleDataAdapter();
-
-            cmd.Parameters.Add(new OracleParameter(":correo", txtCorreo.Text));
-            cmd.Parameters.Add(new OracleParameter(":clave", txtClave.Text));
-
-            Usuario usuario = new Usuario();
-            usuario.Correo = txtCorreo.Text;
-            Session["correo"] = usuario.Correo;
-
-            oda.SelectCommand = cmd;
-            oda.Fill(ds, "usuario");
-            if(ds.Tables[0].Rows.Count > 0)
-            {
-                lblMensaje.Text = "Bienvenido " + Session["correo"];
-            }
-            else
-            {
-                lblMensaje.Text = "Rip";
-            }
-
-            OracleDataReader dr = cmd.ExecuteReader();
-            dr.Read();
-
-            
-            Conexion conn = new Conexion();
-
-            Usuario usuario = new Usuario();
-            usuario.Correo = txtCorreo.Text;
-            usuario.Clave = txtClave.Text;
-
-            ApoderadoNegocio apoderadoNegocio = new ApoderadoNegocio();
-
-            apoderadoNegocio.configurarConexion();
-            apoderadoNegocio.seleccionarCuentaUsuario(usuario);
-
-            apoderadoNegocio.LoginApoderado();
-            if(apoderadoNegocio.LoginApoderado())
-            {
-                lblMensaje.Text = "Login exitoso";
-            }
-            else
-            {
-                lblMensaje.Text = "Nope";
-            }
-            */
 
             c1.CerrarConexion();
         }

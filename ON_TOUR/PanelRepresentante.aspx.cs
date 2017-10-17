@@ -12,7 +12,7 @@ namespace ON_TOUR
         protected void Page_Load(object sender, EventArgs e)
         {
             lblNombreUsuario.Text = "Bienvenid@, " + (String)Session["nombreUsuario"];
-            lblTipoUsuario.Text = "Tipo de usuario: " + Session["tipoUsuario"];
+            lblTipoUsuario.Text = "Tipo de usuario: " + Session["tipoUsuario"] + ", " + (String)Session["rol"];
         }
     }
 }

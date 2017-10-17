@@ -18,14 +18,14 @@
     <form method="post" runat="server">
         <p>
             <asp:Label ID="lblMensaje" runat="server"></asp:Label>
-
+            <asp:Label ID="lblEstado" runat="server" Text=""></asp:Label>
             <asp:Label ID="lblTexto" runat="server"></asp:Label>
         </p>
         <asp:Label ID="lbl1" runat="server"></asp:Label>
         <asp:Label ID="lbl2" runat="server"></asp:Label>
         <asp:Label ID="lbl3" runat="server"></asp:Label>
         <asp:TextBox ID="txtCorreo" placeholder="Correo" TextMode="Email" runat="server"></asp:TextBox>
-        <asp:TextBox ID="txtClave" placeholder="Contraseña" TextMode="Password" runat="server"></asp:TextBox>
+        <asp:TextBox ID="txtClave" placeholder="Contraseña" TextMode="Password" runat="server" MaxLength="4"></asp:TextBox>
         <asp:Button ID="btnLogin" class="btn btn-primary btn-block btn-large" runat="server" Text="Ingresar" OnClick="btnLogin_Click" />
      
     </form>

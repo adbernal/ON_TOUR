@@ -13,6 +13,10 @@ namespace ONTOUR_DTO
         private string nombre;
         private string apellidoP;
         private string apellidoM;
+        private string direccion;
+        private string telefono;
+        private char sexo;
+        private DateTime fechaNacimiento;
         private int idCurso;
         private int idColegio;
         //Tabla usuario
@@ -134,6 +138,58 @@ namespace ONTOUR_DTO
             set
             {
                 idTipoUsuario = value;
+            }
+        }
+
+        public string Direccion
+        {
+            get
+            {
+                return direccion;
+            }
+
+            set
+            {
+                direccion = value;
+            }
+        }
+
+        public string Telefono
+        {
+            get
+            {
+                return telefono;
+            }
+
+            set
+            {
+                telefono = value;
+            }
+        }
+
+        public char Sexo
+        {
+            get
+            {
+                return sexo;
+            }
+
+            set
+            {
+                sexo = value;
+            }
+        }
+
+        public DateTime FechaNacimiento
+        {
+            get
+            {
+                return fechaNacimiento;
+            }
+
+            set
+            {
+                fechaNacimiento = value;
             }
         }
     }

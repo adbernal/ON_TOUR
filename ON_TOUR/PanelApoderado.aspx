@@ -10,6 +10,9 @@
 <body>
     <form id="form1" runat="server">
     <div>
+        <div>
+            <asp:Label ID="lblMensaje" runat="server" Text=""></asp:Label>
+        </div>
         <table>
             <tr>
                 <td><asp:Label ID="lblNombreUsuario" runat="server"></asp:Label></td>
@@ -18,12 +21,31 @@
                 <td><asp:Label ID="lblTipoUsuario" runat="server"></asp:Label></td>
             </tr>
             <tr>
-                <td><asp:Label ID="lbl1" runat="server" Text="Depositos"></asp:Label></td>
-                <td>(INFO)</td>
+                <td>Cantidad de depositos</td>
+                <td><asp:Label ID="lblCantidadDepositos" runat="server" Text="Muchos"></asp:Label></td>
             </tr>
             <tr>
-                <td><asp:Label ID="lbl2" runat="server" Text="Progreso"></asp:Label></td>
+                <td>Progreso</td>
                 <td><asp:Label ID="lblProgreso" runat="server" Text="70%"></asp:Label></td>
+            </tr>
+            <tr>
+                <td>Crear un nuevo deposito</td>
+            </tr>
+            <tr>
+                <td>MONTO:</td>
+                <td><asp:TextBox ID="txtMontoDeposito" runat="server"></asp:TextBox></td>
+            </tr>
+            <tr>
+                <td>FECHA:</td>
+                <td><asp:TextBox ID="txtFechaDeposito" runat="server"></asp:TextBox></td>
+            </tr>
+            <tr>
+                <td>COMENTARIO:</td>
+                <td><asp:TextBox ID="txtComentarioDeposito" runat="server"></asp:TextBox></td>
+            </tr>
+            <tr>
+                <td>CAPTURA DEL COMPROBANTE:</td>
+                <td><asp:FileUpload ID="fupComprobante" runat="server" /></td>
             </tr>
         </table>
     </div>

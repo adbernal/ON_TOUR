@@ -11,8 +11,15 @@ namespace ON_TOUR
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if((String)Session["rol"] != "Ejecutivo")
+            {
+                Response.Redirect("index.aspx");
+            }
+
+            //if((Int32)Session["tipoUsuario"] != 4)
+
             lblNombreUsuario.Text = "Bienvenid@, " + (String)Session["nombreUsuario"];
-            lblTipoUsuario.Text = "Tipo de usuario: " + Session["tipoUsuario"];
+            lblTipoUsuario.Text = "Tipo de usuario: " + Session["tipoUsuario"] + ", " + (String)Session["rol"];
         }
     }
 }
