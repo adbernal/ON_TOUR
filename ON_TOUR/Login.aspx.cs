@@ -36,16 +36,9 @@ namespace ON_TOUR
             c1.Conectar();
 
             try
-            {
-                // 1. JOIN ENTRE TABLAS USUARIO Y APODERADO
-                /*
-                c1.OraCmd = new OracleCommand("SELECT A.RUT, A.NOMBRE, A.APELLIDOP, A.APELLIDOM, A.IDCURSOFK, A.IDCOLEGIOFK, U.CORREO, U.CLAVE, U.IDTIPOUSUARIOFK " +
-                                                "FROM USUARIO U JOIN APODERADO A ON U.CORREO = A.CORREOFK " +
-                                                "WHERE U.CORREO = :correo AND U.CLAVE = :clave", c1.OraConn);
-                */
-                
-                // 2. JOIN ENTRE TABLAS USUARIO, APODERADO, EJECUTIVO
-                c1.OraCmd = new OracleCommand("SELECT NVL(A.NOMBRE, E.NOMBRE), U.CORREO, U.CLAVE, U.IDTIPOUSUARIOFK " +
+            { 
+                // JOIN entre las tablas APODERADO, USUARIO y EJECUTIVO
+                c1.OraCmd = new OracleCommand("SELECT NVL(A.NOMBRE, E.NOMBRE), U.CORREO, U.CLAVE, U.IDTIPOUSUARIOFK, A.IDAPODERADO " +
                                                 "FROM USUARIO U " +
                                                 "FULL OUTER JOIN APODERADO A ON U.CORREO = A.CORREOFK " +
                                                 "FULL OUTER JOIN EJECUTIVO E ON E.CORREOFK = U.CORREO " +
@@ -54,21 +47,18 @@ namespace ON_TOUR
                 c1.OraCmd.Parameters.Add(new OracleParameter(":correo", txtCorreo.Text));
                 c1.OraCmd.Parameters.Add(new OracleParameter(":clave", txtClave.Text));
 
-                //c1.OraDA.SelectCommand = c1.OraCmd;
                 c1.OraDR = c1.OraCmd.ExecuteReader();
                 c1.OraDR.Read();
-
-                // INDICES CORRESPONDIENTES AL JOIN 1
-                //usuario.Correo = c1.OraDR.GetString(6);
-                //usuario.Nombre = c1.OraDR.GetString(1);
-                //usuario.IdTipoUsuario = c1.OraDR.GetInt32(8);
                 
-                usuario.Correo = c1.OraDR.GetString(1);
                 usuario.Nombre = c1.OraDR.GetString(0);
+                usuario.Correo = c1.OraDR.GetString(1);
                 usuario.IdTipoUsuario = c1.OraDR.GetInt32(3);
+                usuario.IdApoderado = c1.OraDR.GetInt32(4);
+                
+                Session["nombreUsuario"] = usuario.Nombre;
                 Session["correo"] = usuario.Correo;
-                Session["nombreUsuario"] = usuario.Nombre + " " + usuario.ApellidoP + " " + usuario.ApellidoM;
                 Session["tipoUsuario"] = usuario.IdTipoUsuario;
+                Session["idApoderado"] = usuario.IdApoderado;
             }
             catch(Exception ex)
             {
@@ -77,7 +67,6 @@ namespace ON_TOUR
                 
             if (c1.OraDR.HasRows)
             {
-                //lblMensaje.Text = "Bienvenid@, " + Session["nombreUsuario"];
                 switch (usuario.IdTipoUsuario)
                 {
                     case 1:

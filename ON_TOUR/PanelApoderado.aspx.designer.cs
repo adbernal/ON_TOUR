@@ -31,6 +31,15 @@ namespace ON_TOUR {
         protected global::System.Web.UI.WebControls.Label lblMensaje;
         
         /// <summary>
+        /// Control btnCerrarSesion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCerrarSesion;
+        
+        /// <summary>
         /// Control lblNombreUsuario.
         /// </summary>
         /// <remarks>
@@ -47,6 +56,15 @@ namespace ON_TOUR {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblTipoUsuario;
+        
+        /// <summary>
+        /// Control lblIdApoderado.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblIdApoderado;
         
         /// <summary>
         /// Control lblCantidadDepositos.
@@ -67,6 +85,15 @@ namespace ON_TOUR {
         protected global::System.Web.UI.WebControls.Label lblProgreso;
         
         /// <summary>
+        /// Control gvDepositos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvDepositos;
+        
+        /// <summary>
         /// Control txtMontoDeposito.
         /// </summary>
         /// <remarks>
@@ -76,13 +103,13 @@ namespace ON_TOUR {
         protected global::System.Web.UI.WebControls.TextBox txtMontoDeposito;
         
         /// <summary>
-        /// Control txtFechaDeposito.
+        /// Control cFecha.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtFechaDeposito;
+        protected global::System.Web.UI.WebControls.Calendar cFecha;
         
         /// <summary>
         /// Control txtComentarioDeposito.
@@ -101,5 +128,14 @@ namespace ON_TOUR {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.FileUpload fupComprobante;
+        
+        /// <summary>
+        /// Control btnNotificarDeposito.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnNotificarDeposito;
     }
 }

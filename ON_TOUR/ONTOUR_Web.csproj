@@ -124,6 +124,11 @@
     <Content Include="PanelApoderado.aspx" />
     <Content Include="PanelEjecutivo.aspx" />
     <Content Include="PanelRepresentante.aspx" />
+    <None Include="Scripts\jquery-1.4.4-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.4.4.js" />
+    <Content Include="Scripts\jquery-1.4.4.min.js" />
+    <Content Include="Scripts\jquery.ui.core.js" />
+    <Content Include="Scripts\jquery.ui.core.min.js" />
     <Content Include="SignUp.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -177,6 +182,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="depositos\" />
     <Folder Include="font-awesome-4.5.0\" />
     <Folder Include="img\" />
     <Folder Include="js\" />

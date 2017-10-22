@@ -9,6 +9,7 @@ namespace ONTOUR_DTO
     public class Usuario
     {
         //Tabla apoderado
+        private int idApoderado;
         private string rut;
         private string nombre;
         private string apellidoP;
@@ -23,6 +24,21 @@ namespace ONTOUR_DTO
         private string correo;
         private string clave;
         private int idTipoUsuario;
+        //Otros
+        private string rol;
+
+        public int IdApoderado
+        {
+            get
+            {
+                return idApoderado;
+            }
+
+            set
+            {
+                idApoderado = value;
+            }
+        }
 
         public string Rut
         {
@@ -190,6 +206,19 @@ namespace ONTOUR_DTO
             set
             {
                 fechaNacimiento = value;
+            }
+        }
+
+        public string Rol
+        {
+            get
+            {
+                return rol;
+            }
+
+            set
+            {
+                rol = value;
             }
         }
     }
