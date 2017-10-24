@@ -1,0 +1,1 @@
+La idea es ir actualizando este doc cada vez que hacemos push
