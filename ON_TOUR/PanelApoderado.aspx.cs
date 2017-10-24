@@ -16,10 +16,12 @@ namespace ON_TOUR
     public partial class PanelApoderado : System.Web.UI.Page
     {
         ConexionOT c1 = new ConexionOT();
+        ConexionOT c1a = new ConexionOT();
         ConexionOT c2 = new ConexionOT();
         ConexionOT c3 = new ConexionOT();
         Usuario usuario = new Usuario();
         Deposito deposito = new Deposito();
+        Contrato contrato = new Contrato();
 
         public void DTOSession()
         {
@@ -28,20 +30,43 @@ namespace ON_TOUR
             usuario.IdTipoUsuario = (int)Session["tipoUsuario"];
             usuario.IdApoderado = (int)Session["idApoderado"];
             usuario.Correo = (String)Session["correo"];
+            usuario.IdCurso = (int)Session["idCurso"];
+            contrato.IsActivo = Convert.ToBoolean(Session["isActivo"]);
         }
 
         protected void Page_Load(object sender, EventArgs e)
         {
             DTOSession();
 
-            if (usuario.Rol != "Apoderado")
+            /*
+            c1a.Conectar();
+            c1a.OraCmd = new OracleCommand("SELECT ISACTIVO FROM CONTRATO WHERE IDCURSOFK = :idCursoFK", c1a.OraConn);
+            c1a.OraCmd.Parameters.Add(new OracleParameter(":idCursoFK", usuario.IdCurso));
+            c1a.OraDR = c1a.OraCmd.ExecuteReader();
+            c1a.OraDR.Read();
+            contrato.IsActivo = Convert.ToBoolean(c1a.OraDR.GetInt32(0));
+            c1a.CerrarConexion();
+            //contrato.IsActivo = Convert.ToBoolean(c1a.OraDR.GetInt32(0)); En caso de mantener el valor numerico y no pasarlo a boolean
+            //if(contrato.EstaActivo.Equals(1))
+            */
+
+            if (contrato.IsActivo)
+            {
+                if (usuario.Rol != "Apoderado")
+                {
+                    Response.Redirect("index.aspx");
+                }
+                else
+                {
+                    lblNombreUsuario.Text = "Bienvenid@, " + usuario.Nombre;
+                    lblTipoUsuario.Text = "Tipo de usuario: " + usuario.IdTipoUsuario + ", " + usuario.Rol; //+ ", Su id de apoderado: " + (String)Session["idApoderado"];
+                    lblIdApoderado.Text = usuario.Correo + ", " + Convert.ToString(usuario.IdApoderado);
+                }
+            }
+            else
             {
                 Response.Redirect("index.aspx");
             }
-
-            lblNombreUsuario.Text = "Bienvenid@, " + usuario.Nombre;
-            lblTipoUsuario.Text = "Tipo de usuario: " + usuario.IdTipoUsuario + ", " + usuario.Rol; //+ ", Su id de apoderado: " + (String)Session["idApoderado"];
-            lblIdApoderado.Text = usuario.Correo + ", " + Convert.ToString(usuario.IdApoderado);
 
             //Retornar los depositos del apoderado
             try
@@ -111,7 +136,7 @@ namespace ON_TOUR
             string[] validFileTypes = { "jpg", "JPG", "png", "PNG", "jpeg", "JPEG" };
             for (int i = 0; i < validFileTypes.Length; i++)
             {
-                if (extension == "." + validFileTypes[i])
+                if (extension == validFileTypes[i])
                 {
                     isValidFile = true;
                     break;
@@ -161,7 +186,6 @@ namespace ON_TOUR
                             lblMensaje.Text = "El tamaño de la imagen no debe superar los 3 MB.";
                             lblMensaje.ForeColor = System.Drawing.Color.Red;
                         }
-                        
                     }
                     else
                     {
